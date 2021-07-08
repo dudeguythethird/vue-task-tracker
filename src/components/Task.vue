@@ -1,9 +1,11 @@
 <template>
-  <div :class="[task.reminder ? 'reminder' : '', 'task']"> 
-    <!-- if task.reminder is true add class 'reminder' else add nothing. also add class 'task' always. -->
+  <div 
+    @dblclick="$emit('toggle-reminder', task.id)" 
+    :class="[task.reminder ? 'reminder' : '', 'task']"> 
+    <!-- If task.reminder (passed down from App.vue) is true, add class 'reminder', else add nothing. Also add class 'task', always. -->
     <h3>
       {{ task.text }}
-      <i  @click="onDelete(task.id)"  class="fas fa-times"></i>
+      <i  @click="$emit('delete-task', task.id)"  class="fas fa-times"></i>
     </h3>
     <p>{{ task.day }}</p>
   </div>
@@ -15,11 +17,6 @@
     props: {
       task: Object
     },
-    methods: {
-      onDelete(id) {
-        this.$emit('delete-task', id)
-      }
-    }
   }
 </script>
 
