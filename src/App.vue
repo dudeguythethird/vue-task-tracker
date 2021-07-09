@@ -1,71 +1,35 @@
 <template>
   <div class="container">
-    <Header title="Task Tracker"/>
-    <AddTask @add-task="addTask" />
-    <Tasks 
-      @toggle-reminder="toggleReminder"
-      @delete-task="deleteTask" 
-      :tasks="tasks" 
+    <Header 
+      @toggle-add-task="toggleAddTask" 
+      title="Task Tracker"
+      :showAddTask="showAddTask"
     />
+    <router-view :showAddTask="showAddTask"></router-view>
+    <Footer />
   </div>
 </template>
 
 <script>
 import Header from './components/Header'
-import Tasks from './components/Tasks'
-import AddTask from './components/AddTask'
+import Footer from './components/Footer'
 
 export default {
   name: 'App',
   components: {
     Header,
-    Tasks,
-    AddTask,
+    Footer,
   },
   data() {
     return {
-      tasks: []
+      showAddTask: false
     }
   },
   methods: {
-    addTask(newTask) {
-      this.tasks = [...this.tasks, newTask]
+    toggleAddTask(){
+      this.showAddTask = !this.showAddTask
     },
-    deleteTask(id) {
-      if(confirm('Are you sure?')){
-        this.tasks = this.tasks.filter((task) => task.id !== id)
-        // defines tasks list below as a filtered version of itself. The filter selects for all tasks which do not have the 'id' variable that has been fed up from the task component.
-      }
-    },
-    toggleReminder(id) {
-      this.tasks = this.tasks.map((task) => 
-          task.id === id ? { ...task, reminder: !task.reminder } : task
-      )
-      // For each task, if its id is equal to the id that has been passed to the function, return the task with its reminder boolean switched to its opposite value, otherwise simply return the task.
-    }
   },
-  created() {
-    this.tasks = [
-      {
-        id: 1,
-        text: 'Doctors Appointment',
-        day: 'March 3rd at 2:30pm',
-        reminder: true,
-      },
-      {
-        id: 2,
-        text: 'Meeting at School',
-        day: 'March 3rd at 1:30pm',
-        reminder: true,
-      },
-      {
-        id: 3,
-        text: 'Food Shopping',
-        day: 'March 3rd at 11:00am',
-        reminder: false,
-      },
-    ]
-  }
 }
 </script>
 

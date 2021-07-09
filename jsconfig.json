@@ -1,0 +1,7 @@
+{
+  "include": [
+    "./src/components",
+    "./src/**/*",
+    "./src"
+, "vue.config.js"  ]
+}
